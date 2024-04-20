@@ -2,35 +2,32 @@ import { Avatar } from "./Avatar"
 import Comment from "./Comment"
 import styles from "./Post.module.css"
 import React from "react"
+import { format } from "date-fns"
+import ptBR from "date-fns/locale/pt-BR"
 
-const Post = () => {
+const Post = ({ author, content, publishedAt }) => {
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    { locale: ptBR }
+  )
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="http://github.com/wellmota.png" />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Wellington Mota</strong>
+            <strong>{author.name}</strong>
             <span>UX/UI Designer</span>
           </div>
         </div>
-        <time title="11 de maio às 09:13h" dateTime="2022-05-11 08:13:30">
-          Publicado há 1hs
+        <time title="" dateTime="2022-05-11 08:13:30">
+          {publishedDateFormatted}
         </time>
       </header>
       <div className={styles.content}>
-        <p>Fala galeraa 👋 </p>
-        <p>Acabei de subir mais um projeto no meu portifa. É um</p>
-        projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é
-        DoctorCare 🚀
-        <p>
-          {" "}
-          <a href="#">jane.design/doctorcare </a>
-        </p>
-        <p>
-          <a href="#">#novoprojeto</a> <a href="#">#nlw</a>{" "}
-          <a href="#">#rocketseat</a>{" "}
-        </p>
+        <p>conteudo</p>
       </div>
 
       <form className={styles.commentForm}>
