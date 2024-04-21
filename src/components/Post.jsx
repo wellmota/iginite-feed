@@ -1,16 +1,27 @@
 import { Avatar } from "./Avatar"
 import Comment from "./Comment"
 import styles from "./Post.module.css"
-import React from "react"
-import { format } from "date-fns"
+import React, { useState } from "react"
+import { format, formatDistanceToNow } from "date-fns"
 import ptBR from "date-fns/locale/pt-BR"
 
 const Post = ({ author, content, publishedAt }) => {
+  const [comments, setComments] = useState([1, 2])
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
-    { locale: ptBR }
+    { locale: ptBR, addSuffix: true }
   )
+
+  function handleCreateNewComment() {
+    event.preventDefault()
+    setComments([...comments, comments.length + 1])
+  }
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+  })
 
   return (
     <article className={styles.post}>
@@ -22,15 +33,26 @@ const Post = ({ author, content, publishedAt }) => {
             <span>UX/UI Designer</span>
           </div>
         </div>
-        <time title="" dateTime="2022-05-11 08:13:30">
-          {publishedDateFormatted}
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishedDateRelativeToNow}
         </time>
       </header>
       <div className={styles.content}>
-        <p>conteudo</p>
+        {content.map((line, index) =>
+          line.type === "paragraph" ? (
+            <p key={index}>{line.content}</p>
+          ) : (
+            <a key={index}>
+              <p>{line.content}</p>
+            </a>
+          )
+        )}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
         <textarea placeholder="Deixe um comentário"></textarea>
         <footer>
@@ -38,9 +60,9 @@ const Post = ({ author, content, publishedAt }) => {
         </footer>
       </form>
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((item, index) => (
+          <Comment key={index} />
+        ))}
       </div>
     </article>
   )
