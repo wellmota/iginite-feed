@@ -6,7 +6,9 @@ import { format, formatDistanceToNow } from "date-fns"
 import ptBR from "date-fns/locale/pt-BR"
 
 const Post = ({ author, content, publishedAt }) => {
-  const [comments, setComments] = useState([1, 2])
+  const [comments, setComments] = useState(["post irado"])
+
+  const [newCommentText, setNewCommentText] = useState("")
 
   const publishedDateFormatted = format(
     publishedAt,
@@ -14,9 +16,19 @@ const Post = ({ author, content, publishedAt }) => {
     { locale: ptBR, addSuffix: true }
   )
 
+  function handleNewCommentChange() {
+    console.log(event.target.value)
+    setNewCommentText(event.target.value)
+  }
+
   function handleCreateNewComment() {
     event.preventDefault()
-    setComments([...comments, comments.length + 1])
+    setComments([...comments, newCommentText])
+    setNewCommentText("")
+  }
+
+  function deleteComment(comment) {
+    console.log(`deletar comentário ${comment}`)
   }
 
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
@@ -54,14 +66,23 @@ const Post = ({ author, content, publishedAt }) => {
 
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Deixe um comentário"></textarea>
+        <textarea
+          placeholder="Deixe um comentário"
+          value={newCommentText}
+          name="comment"
+          onChange={handleNewCommentChange}
+        ></textarea>
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
       <div className={styles.commentList}>
-        {comments.map((item, index) => (
-          <Comment key={index} />
+        {comments.map((comment, index) => (
+          <Comment
+            key={index}
+            content={comment}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </div>
     </article>
