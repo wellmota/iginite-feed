@@ -45,8 +45,6 @@
   gap: 1rem;
 }
 
-
-
 .authorInfo strong {
   display: block;
   color: var(--gray-100);
@@ -85,6 +83,10 @@
   margin-top: 1rem;
 }
 
+.commentForm span {
+  color: var(--gray-400);
+}
+
 .commentForm footer {
   visibility: hidden;
   max-height: 0;
@@ -104,6 +106,10 @@
   color: var(--white);
   cursor: pointer;
   transition: background-color 0.1s;
+}
+
+.commentForm button:disabled {
+  display: none;
 }
 
 .commentForm button[type="submit"]:hover {

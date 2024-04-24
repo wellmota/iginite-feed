@@ -6,8 +6,9 @@ import { format, formatDistanceToNow } from "date-fns"
 import ptBR from "date-fns/locale/pt-BR"
 
 const Post = ({ author, content, publishedAt }) => {
-  const [comments, setComments] = useState(["post irado"])
+  const minCaracteresToComment = 12
 
+  const [comments, setComments] = useState(["post irado"])
   const [newCommentText, setNewCommentText] = useState("")
 
   const publishedDateFormatted = format(
@@ -17,6 +18,7 @@ const Post = ({ author, content, publishedAt }) => {
   )
 
   function handleNewCommentChange() {
+    event.target.setCustomValidity("")
     console.log(event.target.value)
     setNewCommentText(event.target.value)
   }
@@ -27,13 +29,24 @@ const Post = ({ author, content, publishedAt }) => {
     setNewCommentText("")
   }
 
-  function deleteComment(comment) {
-    console.log(`deletar comentário ${comment}`)
+  function handleNewCommentInvalid() {
+    event.target.setCustomValidity("Esse campo é obrigatório")
+  }
+
+  function deleteComment(commentToDelete) {
+    const commentsWithoutDeletedOne = comments.filter((comment) => {
+      return comment !== commentToDelete
+    })
+    console.log(`deletar comentário ${commentToDelete}`)
+    setComments(commentsWithoutDeletedOne)
   }
 
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBR,
   })
+
+  const isNewCommentEmpty =
+    newCommentText === "" || newCommentText.length < minCaracteresToComment
 
   return (
     <article className={styles.post}>
@@ -53,11 +66,11 @@ const Post = ({ author, content, publishedAt }) => {
         </time>
       </header>
       <div className={styles.content}>
-        {content.map((line, index) =>
+        {content.map((line) =>
           line.type === "paragraph" ? (
-            <p key={index}>{line.content}</p>
+            <p key={line.content}>{line.content}</p>
           ) : (
-            <a key={index}>
+            <a key={line.content}>
               <p>{line.content}</p>
             </a>
           )
@@ -71,15 +84,27 @@ const Post = ({ author, content, publishedAt }) => {
           value={newCommentText}
           name="comment"
           onChange={handleNewCommentChange}
+          onInvalid={handleNewCommentInvalid}
         ></textarea>
+
+        {newCommentText.length < minCaracteresToComment &&
+          newCommentText !== "" && (
+            <span>
+              Escreva mais um pouco, restante:{" "}
+              {minCaracteresToComment - newCommentText.length}
+            </span>
+          )}
+
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Publicar
+          </button>
         </footer>
       </form>
       <div className={styles.commentList}>
-        {comments.map((comment, index) => (
+        {comments.map((comment) => (
           <Comment
-            key={index}
+            key={comment}
             content={comment}
             onDeleteComment={deleteComment}
           />

@@ -20,16 +20,16 @@ const posts = [
     content: [
       {
         type: "paragraph",
-        content: "Fala galeraa 👋",
+        content: "Fala galeeraa 👋",
       },
       {
         type: "paragraph",
         content:
-          "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat.",
+          "Acabei de seubir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat.",
       },
       {
         type: "paragraph",
-        content: "O nome do projeto é DoctorCare 🚀",
+        content: "O nomwee do projeto é DoctorCare 🚀",
       },
       {
         type: "link",
@@ -48,20 +48,20 @@ const posts = [
     content: [
       {
         type: "paragraph",
-        content: "Fala galeraa 👋",
+        content: "Falaefd galeraa 👋",
       },
       {
         type: "paragraph",
         content:
-          "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat.",
+          "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Reffeeturn, evento da Rocketseat.",
       },
       {
         type: "paragraph",
-        content: "O nome do projeto é DoctorCare 🚀",
+        content: "O nofefefme do projeto é DoctorCare 🚀",
       },
       {
         type: "link",
-        content: "jane.design/doctorcare",
+        content: "jane.defsign/doctorcare",
       },
     ],
     publishedAt: new Date("2022-05-03 20:00:00"),
@@ -76,20 +76,20 @@ const posts = [
     content: [
       {
         type: "paragraph",
-        content: "Fala galeraa 👋",
+        content: "Falfa galeraa 👋",
       },
       {
         type: "paragraph",
         content:
-          "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat.",
+          "Acabei defe subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat.",
       },
       {
         type: "paragraph",
-        content: "O nome do projeto é DoctorCare 🚀",
+        content: "O nofme do projeto é DoctorCare 🚀",
       },
       {
         type: "link",
-        content: "jane.design/doctorcare",
+        content: "janeevvev.design/doctorcare",
       },
     ],
     publishedAt: new Date("2022-05-03 20:00:00"),
@@ -103,7 +103,7 @@ function App() {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
-          {posts.map((item, index) => (
+          {posts.map((item) => (
             <Post
               key={item.id}
               author={item.author}
